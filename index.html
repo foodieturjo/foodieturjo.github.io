@@ -3,35 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Countdown Timer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .countdown {
+            text-align: center;
+            font-size: 2em;
+            padding: 20px;
+            background-color: #333;
+            color: #fff;
+            border-radius: 10px;
+        }
+        .time-unit {
+            margin: 0 10px;
+        }
+        .label {
+            font-size: 0.5em;
+        }
+    </style>
 </head>
 <body>
-    <h1>ovik</h1>
+
+<div class="countdown">
+    <div id="days" class="time-unit">
+        <span>00</span>
+        <div class="label">Days</div>
+    </div>
+    <div id="hours" class="time-unit">
+        <span>00</span>
+        <div class="label">Hours</div>
+    </div>
+    <div id="minutes" class="time-unit">
+        <span>00</span>
+        <div class="label">Minutes</div>
+    </div>
+    <div id="seconds" class="time-unit">
+        <span>00</span>
+        <div class="label">Seconds</div>
+    </div>
+    <div id="milliseconds" class="time-unit">
+        <span>000</span>
+        <div class="label">Milliseconds</div>
+    </div>
+</div>
+
+<script>
+    // Set the date we're counting down to
+    const targetDate = new Date('June 26, 2025 00:00:00').getTime();
+
+    // Update the countdown every 1 millisecond
+    const interval = setInterval(function() {
+        // Get current time
+        const now = new Date().getTime();
+
+        // Calculate the time difference
+        const distance = targetDate - now;
+
+        // Time calculations
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        const milliseconds = distance % 1000;
+
+        // Display the result
+        document.getElementById('days').children[0].innerText = String(days).padStart(2, '0');
+        document.getElementById('hours').children[0].innerText = String(hours).padStart(2, '0');
+        document.getElementById('minutes').children[0].innerText = String(minutes).padStart(2, '0');
+        document.getElementById('seconds').children[0].innerText = String(seconds).padStart(2, '0');
+        document.getElementById('milliseconds').children[0].innerText = String(milliseconds).padStart(3, '0');
+
+        // If the countdown is finished, stop the timer
+        if (distance <= 0) {
+            clearInterval(interval);
+            document.querySelector('.countdown').innerHTML = "EXPIRED";
+        }
+    }, 1);
+</script>
+
 </body>
 </html>
-
-<style>
-    h1{
-        color: red;
-        animation: colorchange 5s infinite;
-        font-size: 70px;
-    }
-    @keyframes colorchange{
-        0%{
-            color: red;
-        }
-        25%{
-            color: yellow;
-        }
-        50%{
-            color: blue;
-        }
-        75%{
-            color: green;
-        }
-        100%{
-            color: red;
-        }
-    }
-
-</style>
